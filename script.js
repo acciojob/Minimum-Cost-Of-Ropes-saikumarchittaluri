@@ -28,7 +28,5 @@
 }
 
 // Example usage
-var n = 5;
-var arr = [4, 2, 7, 6, 9];
-var minimumCost = calculateMinimumCost(n, arr);
+ 
 console.log(minimumCost);  // Output: 62
