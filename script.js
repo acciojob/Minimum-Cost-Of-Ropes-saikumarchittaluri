@@ -1,32 +1,36 @@
- function calculateMinimumCost(n, arr) {
-  // Sort the array of rope lengths in ascending order
-  arr.sort((a, b) => a - b);
+// Function to calculate the minimum cost of connecting ropes
+function calculateMinCost() {
+  const ropeLengthsInput = document.getElementById('rope-lengths');
+  const resultDiv = document.getElementById('result');
 
-  var totalCost = 0;
+  // Get the input value and split it into an array of rope lengths
+  const inputString = ropeLengthsInput.value;
+  const ropeLengths = inputString.split(',').map(Number);
 
-  // Combine the two smallest ropes until only one rope is left
-  while (n > 1) {
-    // Combine the two smallest ropes
-    var smallestRope1 = arr[0];
-    var smallestRope2 = arr[1];
-    var combinedLength = smallestRope1 + smallestRope2;
+  // Sort the rope lengths in ascending order
+  ropeLengths.sort((a, b) => a - b);
 
-    // Update the total cost
-    totalCost += combinedLength;
+  let totalCost = 0;
+  while (ropeLengths.length > 1) {
+    // Take the two shortest ropes
+    const min1 = ropeLengths.shift();
+    const min2 = ropeLengths.shift();
 
-    // Remove the two smallest ropes from the array
-    arr.splice(0, 2);
+    // Calculate the cost of connecting them
+    const cost = min1 + min2;
 
-    // Insert the combined rope back into the array
-    arr.push(combinedLength);
+    // Add the cost to the total cost
+    totalCost += cost;
 
-    // Decrease the count of remaining ropes
-    n--;
+    // Insert the connected rope back into the sorted array
+    // in its correct position
+    let i = 0;
+    while (i < ropeLengths.length && ropeLengths[i] < cost) {
+      i++;
+    }
+    ropeLengths.splice(i, 0, cost);
   }
 
-  return totalCost;
+  // Display the minimum cost in the result div
+  resultDiv.textContent = `Minimum Cost: ${totalCost}`;
 }
-
-// Example usage
- 
-console.log(minimumCost);  // Output: 62
